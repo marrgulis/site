@@ -1,117 +1,328 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правила ведения и отправки отчетов по питанию</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Твоя тренировка</title>
     <style>
-        body {
-            font-family: sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
-        h1 {
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-        ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        .example {
-            background-color: #f9f9f9;
-            border-left: 5px solid #3498db;
-            padding: 15px;
-            margin: 20px 0;
-        }
-        .example h3 {
-            margin-top: 0;
-            color: #3498db;
-        }
-        strong {
-            color: #e74c3c;
-        }
-        .header-image {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px 0;
-        }
+      :root {
+        /* Зеленая палитра */
+        --primary-color: #059669; /* Насыщенный изумрудный */
+        --bg-color: #f0fdf4; /* Очень светлый мятный фон */
+        --card-bg: #ffffff;
+        --text-main: #1f2937;
+        --text-muted: #4b5563;
+
+        --warning-bg: #fef3c7;
+        --warning-border: #f59e0b;
+        --warning-text: #92400e;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px 15px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        margin-bottom: 5px;
+      }
+
+      .alert {
+        background-color: var(--warning-bg);
+        border-left: 5px solid var(--warning-border);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        color: var(--warning-text);
+        font-size: 0.95rem;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-main);
+      }
+
+      .exercise-card {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(5, 150, 105, 0.05);
+        border: 1px solid #e5e7eb;
+      }
+
+      .exercise-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin: 0 0 15px 0;
+        border-bottom: 2px solid #ecfdf5;
+        padding-bottom: 10px;
+      }
+
+      .exercise-details {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .exercise-details li {
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+      }
+
+      .exercise-details li strong {
+        color: var(--text-main);
+      }
+
+      .tech-note {
+        background-color: #f9fafb;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        margin-top: 15px;
+        border-left: 3px solid var(--primary-color);
+        color: var(--text-muted);
+      }
+
+      /* Обновленный блок инструкций по весам */
+      .weight-guide {
+        background-color: var(--card-bg); /* Беловатый фон */
+        color: var(--text-main);
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+        border: 1px solid #e5e7eb;
+      }
+
+      .weight-guide h3 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-main);
+      }
+
+      .weight-guide p {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        color: var(--text-muted);
+      }
+
+      .guide-rule {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+      }
+
+      .rule-decrease {
+        background-color: #fef2f2; /* Легкий красный фон */
+        border-left: 4px solid #ef4444; /* Красная полоска сбоку */
+      }
+
+      .rule-increase {
+        background-color: #ecfdf5; /* Легкий зеленый фон */
+        border-left: 4px solid #10b981; /* Зеленая полоска сбоку */
+      }
+
+      .guide-rule strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 1rem;
+      }
+
+      .decrease {
+        color: #b91c1c;
+      } /* Насыщенный красный для текста заголовка */
+      .increase {
+        color: #047857;
+      } /* Насыщенный зеленый для текста заголовка */
+
+      /* Финальная карточка */
+      .goal-card {
+        background-color: var(--primary-color);
+        color: #ffffff;
+        text-align: center;
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 25px;
+        box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);
+      }
+
+      .goal-card p {
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.5;
+      }
+
+      .goal-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.2rem;
+        color: #ecfdf5;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>💅 Твоя самостоятельная тренировка</h1>
+        <p style="color: var(--text-muted); margin: 0">Пятница</p>
+      </header>
 
-    <h1>Правила ведения и отправки отчетов по питанию</h1>
+      <div class="alert">
+        <strong>Важно: не забудь про разминку!</strong><br />
+        Перед тем как приступить к весам, обязательно потрать 5–10 минут на
+        суставную гимнастику или легкое кардио (дорожка/эллипс). Это разогреет
+        мышцы, подготовит суставы и убережет от травм.
+      </div>
 
-    <img src="https://i.ibb.co/bR5H5cbS/IMG-4396.jpg" alt="IMG-4396" border="0" class="header-image">
+      <h2 class="section-title">🏋️‍♀️ Твоя программа на сегодня:</h2>
 
-    <p>На каждый прием пищи (завтрак, обед, ужин, перекусы) нужно отправить:</p>
-
-    <h2>1. Фотография готового блюда:</h2>
-    <ul>
-        <li>Сделайте четкое фото вашей тарелки сверху, при хорошем освещении.</li>
-        <li>На фото должны быть видны все компоненты блюда. Тарелка должна быть собрана по методу "Здоровой тарелки".</li>
-    </ul>
-
-    <h2>2. Взвешивание и описание:</h2>
-    <ul>
-        <li><strong>Все продукты необходимо взвешивать на кухонных весах.</strong> Это ключевое правило для получения точных данных.</li>
-        <li>Под фотографией напишите список всех съеденных продуктов с указанием их веса.</li>
-        <li><strong>Сыпучие продукты (крупы, макароны):</strong> Взвешивайте в сухом виде до приготовления. Например: <em>Гречка - 50 г (сухой)</em>.</li>
-        <li><strong>Мясо, птица, рыба:</strong> Взвешивайте в сыром виде до приготовления. Например: <em>Куриная грудка - 150 г (сырая)</em>.</li>
-        <li><strong>Овощи и фрукты:</strong> Взвешивайте в том виде, в котором едите (свежие, после нарезки).</li>
-        <li><strong>Масла, соусы, заправки:</strong> Обязательно взвешивайте или измеряйте (например, <em>Оливковое масло - 10 г или 1 ст. л.</em>). <strong>Это очень важный пункт, это причина отсутствия результата.</strong></li>
-        <li><strong>Напитки:</strong> Указывайте все напитки, кроме чистой воды (чай, кофе, соки, молоко). Если добавляете сахар, сироп или молоко их тоже указывайте.</li>
-    </ul>
-
-    <h2>3. Фотографии упаковок и БЖУ:</h2>
-    <ul>
-        <li>Если вы едите готовый продукт в упаковке (йогурт, творог, хлебцы, соус, протеиновый батончик и т.д.), обязательно сфотографируйте упаковку с двух сторон:
-            <ol>
-                <li><strong>Лицевая сторона:</strong> Чтобы было видно название продукта.</li>
-                <li><strong>Обратная сторона:</strong> Четкое фото таблицы с БЖУ (белки, жиры, углеводы) и калорийностью на 100 грамм.</li>
-            </ol>
-        </li>
-    </ul>
-
-    <div class="example">
-        <h3>Пример идеального отчета по одному приему пищи:</h3>
-        <p><strong>1. Фотография тарелки</strong></p>
-        <p><strong>2. Описание и вес:</strong></p>
-        <ul>
-            <li>Запеченная куриная грудка: 150 г (в сыром виде)</li>
-            <li>Гречка: 50 г (в сухом виде)</li>
-            <li>Салат:
-                <ul>
-                    <li>Помидоры: 100 г</li>
-                    <li>Огурцы: 80 г</li>
-                    <li>Листья салата: 20 г</li>
-                </ul>
-            </li>
-            <li>Заправка для салата: Оливковое масло - 10 г.</li>
+      <div class="exercise-card">
+        <h3 class="exercise-title">1. Жим ногами</h3>
+        <ul class="exercise-details">
+          <li>
+            <strong>Подходы и повторения:</strong> 4 подхода по 12 повторений
+          </li>
+          <li><strong>Вес:</strong> 50 кг</li>
         </ul>
-        <p><strong>3. Фото упаковки (если что-то было в упаковке, например, йогурт на десерт):</strong></p>
-        <ul>
-            <li>Фото лицевой стороны йогурта</li>
-            <li>Фото таблицы БЖУ с упаковки йогурта.</li>
+        <div class="tech-note">
+          <strong>Техника:</strong> Поясница плотно прижата к спинке тренажера.
+          Толкай платформу всей стопой, в верхней точке не выпрямляй колени до
+          конца. Опускай вес плавно и подконтрольно.
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <h3 class="exercise-title">2. Отведение бедра (в тренажере)</h3>
+        <ul class="exercise-details">
+          <li>
+            <strong>Подходы и повторения:</strong> 4 подхода по 12 повторений
+          </li>
+          <li><strong>Вес:</strong> 30 кг</li>
         </ul>
+        <div class="tech-note">
+          <strong>Техника:</strong> Сиди ровно, держись за ручки. Разводи ноги
+          мощным движением, делай паузу на секунду, а своди медленно,
+          сопротивляясь весу тренажера.
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <h3 class="exercise-title">3. Вертикальная тяга</h3>
+        <ul class="exercise-details">
+          <li>
+            <strong>Подходы и повторения:</strong> 4 подхода по 12 повторений
+          </li>
+          <li><strong>Вес:</strong> 18 кг</li>
+        </ul>
+        <div class="tech-note">
+          <strong>Техника:</strong> Грудь тяни вверх, лопатки каждое повторение
+          опускай и своди вместе. Тяни рукоятку к верхней части груди, локти
+          направляй вниз и немного вперед. Не отклоняйся слишком сильно назад.
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <h3 class="exercise-title">4. Жим в тренажере (на грудь)</h3>
+        <ul class="exercise-details">
+          <li>
+            <strong>Подходы и повторения:</strong> 4 подхода по 12 повторений
+          </li>
+          <li><strong>Вес:</strong> 13 кг (Уровень сиденья: 2)</li>
+        </ul>
+        <div class="tech-note">
+          <strong>Техника:</strong> Лопатки сведены и прижаты к спинке. Выжимай
+          вес активно, а возвращай плавно. Локти держи чуть ниже уровня плеч.
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <h3 class="exercise-title">5. Разгибание локтя (в кроссовере)</h3>
+        <ul class="exercise-details">
+          <li>
+            <strong>Подходы и повторения:</strong> 4 подхода по 12 повторений
+          </li>
+          <li><strong>Вес:</strong> 7.5 кг</li>
+        </ul>
+        <div class="tech-note">
+          <strong>Техника:</strong> Спина ровная, небольшой наклон корпуса
+          вперед. Локти плотно прижаты к корпусу, выпрямляй руки до конца.
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <h3 class="exercise-title">6. Мертвый жук</h3>
+        <ul class="exercise-details">
+          <li>
+            <strong>Подходы и повторения:</strong> 4 подхода по 10 повторений
+          </li>
+          <li><strong>Вес:</strong> Собственный вес</li>
+        </ul>
+        <div class="tech-note">
+          <strong>Техника:</strong> Поясница намертво прижата к полу. Опускай
+          противоположные руку и ногу медленно. Если чувствуешь, что поясница
+          отрывается — опускай ногу не так низко.
+        </div>
+      </div>
+
+      <div class="weight-guide">
+        <h3>⚖️ Как подбирать вес?</h3>
+        <p>
+          Веса, которые я указала — это последние веса, с которыми ты работала.
+          Но ты должна слушать свое тело в этот конкретный день.
+        </p>
+
+        <div class="guide-rule rule-decrease">
+          <strong class="decrease">🔻 Когда УМЕНЬШИТЬ вес:</strong>
+          Если ты чувствуешь сильную усталость, не выспалась или вес кажется
+          слишком тяжелым (техника «ломается», не можешь сделать 10-12
+          повторений), смело бери вес поменьше.
+          <em>(Но помни, что так не должно быть на каждой тренировке).</em>
+        </div>
+
+        <div class="guide-rule rule-increase">
+          <strong class="increase">🔺 Когда УВЕЛИЧИТЬ вес:</strong>
+          Если ты сделала все 12 повторений и чувствуешь, что последние 2-3
+          повтора дались легко (остался запас сил еще на 3-4 повторения), в
+          следующем подходе или на следующей неделе немного добавь вес
+          (например, +1 кг или +2.5 кг).
+        </div>
+      </div>
+
+      <div class="goal-card">
+        <strong>🎯 Главная цель</strong>
+        <p>
+          Чтобы последние 3 повторения в подходе были сложными, но выполнимыми с
+          идеальной техникой.<br /><br />И не забудь записывать свои новые веса
+          :)
+        </p>
+      </div>
     </div>
-
-    <h2>Приемы пищи вне дома (кафе/рестораны):</h2>
-    <ul>
-        <li>Сфотографируйте блюдо.</li>
-        <li>Напишите название и подробное описание из меню.</li>
-        <li>Постарайтесь максимально точно на глаз определить состав и примерный вес компонентов если их нет в меню, или вы не можете спросить у официанта. Например: <em>"Салат Цезарь: примерно 100 г курицы, много листьев салата, несколько помидоров черри, гренки, соус"</em>. И сфотографировать.</li>
-    </ul>
-
-</body>
+  </body>
 </html>
